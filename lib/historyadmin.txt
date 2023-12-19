@@ -1,0 +1,233 @@
+ import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:khatam_quran/app/routes/app_pages.dart';
+import '../controllers/history_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controllers/history_controller.dart';
+
+class HistoryView extends GetView<HistoryController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('History'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Column(
+          children: [
+            SizedBox(height: 18.0),
+            UserProfileWidget(),
+            SizedBox(height: 50.0),
+            DataTextWidget(),
+            SizedBox(height: 20.0),
+            Expanded(
+                child: MyHomePage()), // Use Expanded to take remaining space
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Get.offAllNamed(Routes.HOME);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.upload),
+              onPressed: () {
+                Get.offAllNamed(Routes.DATA_MENGAJI);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.history),
+              onPressed: () {
+                // Do nothing or add specific logic if needed
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // The rest of your code remains unchanged...
+}
+
+class UserProfileWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 20.0,
+          backgroundImage: AssetImage('assets/foto_profil.jpg'),
+        ),
+        SizedBox(width: 8.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nama Ustad',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            Text(
+              'Admin',
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class DataTextWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          'Rekap',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Color(0xFF008000),
+          ),
+        ),
+        SizedBox(width: 8.0),
+        Text(
+          'Mengaji',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  final List<Map<String, String>> dataDiterima = [
+    {
+      'nama': 'Nama Mahasiswa',
+      'nim': 'NIM',
+      'informasi al-quran': 'Juz 1 Surah Al-Baqarah Ayat 23',
+      'tanggal': '15 Desember 2023',
+    },
+    // Tambahkan data diterima lainnya jika diperlukan
+  ];
+
+  final List<Map<String, String>> dataDitolak = [
+    {
+      'nama': 'Nama Mahasiswa',
+      'nim': 'NIM',
+      'informasi al-quran': 'Juz 1 Surah Al-Baqarah Ayat 23',
+      'tanggal': '15 Desember 2023',
+    },
+    // Tambahkan data ditolak lainnya jika diperlukan
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            buildDataTable("Data Diterima", dataDiterima),
+            buildDataTable("Data Ditolak", dataDitolak),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildDataTable(String title, List<Map<String, String>> dataList) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columnSpacing: 110.0,
+              columns: [
+                DataColumn(label: Text('No')),
+                DataColumn(label: Text('Nama')),
+                DataColumn(label: Text('NIM')),
+                DataColumn(label: Text('Video')),
+                DataColumn(label: Text('Informasi Al-Quran')),
+                DataColumn(label: Text('Tanggal')),
+                DataColumn(label: Text('Edit')),
+                DataColumn(label: Text('Delete')),
+              ],
+              rows: List.generate(dataList.length, (index) {
+                final data = dataList[index];
+                return DataRow(cells: [
+                  DataCell(Text((index + 1).toString())),
+                  DataCell(Text(data['nama'] ?? '')),
+                  DataCell(Text(data['nim'] ?? '')),
+                  DataCell(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.video_library,
+                            color: Colors.black, size: 32.0),
+                        SizedBox(height: 4.0),
+                        Text('20:00', style: TextStyle(fontSize: 10.0)),
+                      ],
+                    ),
+                  ),
+                  DataCell(Text(data['informasi al-quran'] ?? '')),
+                  DataCell(Text(data['tanggal'] ?? '')),
+                  DataCell(IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Handle edit action here
+                      // You can use the index to identify the item to be edited
+                    },
+                  )),
+                  DataCell(IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      // Handle delete action here
+                      // You can use the index to identify the item to be deleted
+                    },
+                  )),
+                ]);
+              }),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

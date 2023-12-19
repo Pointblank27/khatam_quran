@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10977810559",
+    "project_id": "khatam-quran-31f14",
+    "storage_bucket": "khatam-quran-31f14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10977810559:android:2b2e8b7fd24371dc20c74a",
+        "android_client_info": {
+          "package_name": "com.khatamquran.khatam_quran"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7x--psjqVcMuj5ZS3f_BBIREdreDVIYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
